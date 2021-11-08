@@ -1,0 +1,22 @@
+html, body, #app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #F5F8FA;
+}
+
+.el-pagination {
+    margin-top: 20px;
+}
+
+/*未激活的分页*/
+.el-pagination.is-background .el-pager li:not(.disabled) {
+    background-color: #98A9F9;
+    color: #fff;
+}
+
+/*激活的分页*/
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+    background-color: #EE6E73;
+    color: #fff;
+}

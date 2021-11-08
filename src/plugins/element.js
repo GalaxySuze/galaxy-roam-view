@@ -1,0 +1,50 @@
+import Vue from 'vue'
+import {
+  Button,
+  Container,
+  Header,
+  Main,
+  Footer,
+  Row,
+  Col,
+  Menu,
+  MenuItem,
+  Tabs,
+  TabPane,
+  Card,
+  Carousel,
+  CarouselItem,
+  Avatar,
+  Link,
+  Tag,
+  Pagination,
+  Image,
+  Form,
+  FormItem,
+  Input,
+  Divider
+} from 'element-ui'
+
+Vue.use(Button)
+Vue.use(Container)
+Vue.use(Header)
+Vue.use(Main)
+Vue.use(Footer)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(Menu)
+Vue.use(MenuItem)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Card)
+Vue.use(Carousel)
+Vue.use(CarouselItem)
+Vue.use(Avatar)
+Vue.use(Link)
+Vue.use(Tag)
+Vue.use(Pagination)
+Vue.use(Image)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Input)
+Vue.use(Divider)
