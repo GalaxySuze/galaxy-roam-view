@@ -6,6 +6,9 @@ import Admin from '../components/Admin'
 import Login from '../components/admin/Login'
 import Welcome from '../components/admin/Welcome'
 import User from '../components/admin/user/User'
+import Category from '../components/admin/category/Category'
+import Tag from '../components/admin/tag/Tag'
+import Team from '../components/admin/team/Team'
 
 Vue.use(VueRouter)
 
@@ -41,6 +44,18 @@ const routes = [
       {
         path: '/user',
         component: User
+      },
+      {
+        path: '/category',
+        component: Category
+      },
+      {
+        path: '/tag',
+        component: Tag
+      },
+      {
+        path: '/team',
+        component: Team
       }
     ]
   }

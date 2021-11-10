@@ -32,7 +32,7 @@
     <el-container>
       <el-header>
         <div>
-          <el-button type="danger" size="mini" icon="el-icon-s-fold" circle @click="toggleCollapse"></el-button>
+          <el-button type="danger" size="small" icon="el-icon-s-fold" circle @click="toggleCollapse"></el-button>
           <el-button type="primary" size="small" icon="el-icon-s-home" circle></el-button>
         </div>
         <div class="header-user">
