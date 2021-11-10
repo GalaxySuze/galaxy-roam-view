@@ -11,6 +11,11 @@ import axios from 'axios'
 
 // 配置请求根路径
 axios.defaults.baseURL = 'http://galaxyroam.test:8080/api/'
+// 配置请求拦截器
+axios.interceptors.request.use(config => {
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false

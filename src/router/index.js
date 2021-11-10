@@ -3,7 +3,9 @@ import VueRouter from 'vue-router'
 import Web from '../components/Web'
 import Index from '../components/web/Index'
 import Admin from '../components/Admin'
-import Login from '../components/admin/login/Login'
+import Login from '../components/admin/Login'
+import Welcome from '../components/admin/Welcome'
+import User from '../components/admin/user/User'
 
 Vue.use(VueRouter)
 
@@ -19,6 +21,7 @@ const routes = [
   {
     path: '/home',
     component: Web,
+    redirect: '/index',
     children: [
       {
         path: '/index',
@@ -29,10 +32,15 @@ const routes = [
   {
     path: '/admin',
     component: Admin,
+    redirect: '/welcome',
     children: [
       {
-        path: '/index',
-        component: Index
+        path: '/welcome',
+        component: Welcome
+      },
+      {
+        path: '/user',
+        component: User
       }
     ]
   }
@@ -40,6 +48,16 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+// 路由导航守卫
+router.beforeEach((to, from, next) => {
+  if (to.path === '/admin/login' || to.path === '/home' || to.path === '/index') {
+    return next()
+  }
+  const tokenStr = window.sessionStorage.getItem('token')
+  if (!tokenStr) return next('/admin/login')
+  next()
 })
 
 export default router

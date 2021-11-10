@@ -20,3 +20,39 @@ html, body, #app {
     background-color: #EE6E73;
     color: #fff;
 }
+
+/*列表页面通用样式*/
+.list-box {
+    display: flex;
+    justify-content: center;
+}
+
+.list-row {
+    width: 100%;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+
+.add-btn {
+    text-align: right;
+}
+
+.el-breadcrumb {
+    line-height: 36px;
+}
+
+.list-card {
+    margin-top: 16px;
+    margin-bottom: 20px;
+    border-radius: 10px 10px 0 0;
+    border: none;
+    box-shadow: 0 1px 0 #dadbe4 !important;
+}
+
+.el-table {
+    width: 100%;
+    border: none;
+    box-shadow: 0 1px 0 #dadbe4 !important;
+    margin-bottom: 20px;
+}
+

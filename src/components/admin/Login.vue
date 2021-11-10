@@ -8,12 +8,12 @@
             <span class="card_header"><i class="el-icon-user"></i>&nbsp;用户登录</span>
           </div>
           <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" class="login_form">
-            <el-form-item prop="username">
-              <el-input prefix-icon="iconfont iconfont-email" v-model="loginForm.username"
+            <el-form-item prop="email">
+              <el-input prefix-icon="iconfont iconfont-email" v-model="loginForm.email" clearable
                         placeholder="邮箱地址"></el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <el-input prefix-icon="iconfont iconfont-mima" v-model="loginForm.password" type="password"
+              <el-input prefix-icon="iconfont iconfont-mima" v-model="loginForm.password" clearable type="password"
                         placeholder="密码"></el-input>
             </el-form-item>
             <el-form-item>
@@ -48,11 +48,11 @@ export default {
   data () {
     return {
       loginForm: {
-        username: '',
+        email: '',
         password: ''
       },
       loginFormRules: {
-        username: [
+        email: [
           {
             required: true,
             message: '请输入登录邮箱',
@@ -79,8 +79,14 @@ export default {
     login () {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return
-        const { data: res } = await this.$http.post('/auth/login', this.loginForm)
-        console.log(res)
+        const { data: res } = await this.$http.post('auth/login', this.loginForm)
+        if (res.meta.status !== 200) {
+          return this.$message.error(res.meta.msg)
+        }
+        this.$message.success(`Hi ${res.data.user.username}`)
+        window.sessionStorage.setItem('login_avatar', res.data.user.avatar)
+        window.sessionStorage.setItem('token', res.data.access_token)
+        await this.$router.push('/admin')
       })
     }
   }

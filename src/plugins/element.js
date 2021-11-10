@@ -1,14 +1,18 @@
 import Vue from 'vue'
 import {
+  Message,
   Button,
   Container,
   Header,
+  Aside,
   Main,
   Footer,
   Row,
   Col,
   Menu,
   MenuItem,
+  MenuItemGroup,
+  Submenu,
   Tabs,
   TabPane,
   Card,
@@ -22,18 +26,31 @@ import {
   Form,
   FormItem,
   Input,
-  Divider
+  Divider,
+  Breadcrumb,
+  BreadcrumbItem,
+  PageHeader,
+  Table,
+  TableColumn,
+  Switch,
+  Tooltip,
+  Dialog
 } from 'element-ui'
+
+Vue.prototype.$message = Message
 
 Vue.use(Button)
 Vue.use(Container)
 Vue.use(Header)
+Vue.use(Aside)
 Vue.use(Main)
 Vue.use(Footer)
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Menu)
 Vue.use(MenuItem)
+Vue.use(MenuItemGroup)
+Vue.use(Submenu)
 Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.use(Card)
@@ -48,3 +65,11 @@ Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
 Vue.use(Divider)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
+Vue.use(PageHeader)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Switch)
+Vue.use(Tooltip)
+Vue.use(Dialog)
