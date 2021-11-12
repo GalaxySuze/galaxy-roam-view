@@ -35,6 +35,8 @@ import {
   Switch,
   Tooltip,
   Dialog,
+  Select,
+  Option,
   MessageBox
 } from 'element-ui'
 
@@ -75,3 +77,5 @@ Vue.use(TableColumn)
 Vue.use(Switch)
 Vue.use(Tooltip)
 Vue.use(Dialog)
+Vue.use(Select)
+Vue.use(Option)

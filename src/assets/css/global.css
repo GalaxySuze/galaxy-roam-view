@@ -56,3 +56,7 @@ html, body, #app {
     margin-bottom: 20px;
 }
 
+.ql-editor {
+    min-height: 360px;
+}
+

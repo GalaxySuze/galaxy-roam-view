@@ -6,6 +6,11 @@ import './plugins/element.js'
 import '../src/assets/css/global.css'
 // 导入字体图标
 import '../src/assets/fonts/iconfont.css'
+// 导入富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css' // import styles
+import 'quill/dist/quill.snow.css' // for snow theme
+import 'quill/dist/quill.bubble.css' // for bubble theme
 
 import axios from 'axios'
 
@@ -19,6 +24,23 @@ axios.interceptors.request.use(config => {
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
+// 注册富文本编辑器为全局可用组件
+Vue.use(VueQuillEditor)
+
+// 注册全局时间过滤器
+Vue.filter('DateFormat', function (data, format = null) {
+  const dt = new Date(data)
+
+  const y = dt.getFullYear()
+  const m = (dt.getMonth() + 1 + '').padStart(2, '0')
+  const d = (dt.getDay() + '').padStart(2, '0')
+
+  const hh = (dt.getHours() + '').padStart(2, '0')
+  const mm = (dt.getMinutes() + '').padStart(2, '0')
+  const ss = (dt.getSeconds() + '').padStart(2, '0')
+
+  return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+})
 
 new Vue({
   router,

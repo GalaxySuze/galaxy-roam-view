@@ -11,7 +11,7 @@
       </el-col>
       <!-- 功能栏 -->
       <el-col :span="6" class="add-btn">
-        <el-button type="primary" size="small" icon="iconfont iconfont-tianjia-" @click="addDialogVisible = true">&nbsp;添加标签
+        <el-button type="primary" size="small" icon="iconfont iconfont-tianjia-" @click="showAddDialog">&nbsp;添加标签
         </el-button>
       </el-col>
       <el-col :span="24">
@@ -38,6 +38,13 @@
           <el-table-column
             prop="tag"
             label="标签名称">
+          </el-table-column>
+          <el-table-column
+            prop="created_at"
+            label="创建时间">
+            <template v-slot="{ row }">
+              {{ row.created_at | DateFormat }}
+            </template>
           </el-table-column>
           <el-table-column
             width="260"
@@ -146,10 +153,9 @@ export default {
       this.total = res.data.total
       this.searchLoading = false
     },
-    showEditDialog (row) {
-      this.editForm.id = row.id
-      this.editForm.tag = row.title
-      this.editDialogVisible = true
+    showAddDialog () {
+      this.addForm = { tag: '' }
+      this.addDialogVisible = true
     },
     // 删除处理
     async handleDelete (id) {
@@ -196,8 +202,8 @@ export default {
           return this.$message.error(res.meta.msg)
         }
         this.$message.success('添加标签成功')
-        this.$refs.addFormRef.resetFields()
         this.addDialogVisible = false
+        this.$refs.addFormRef.resetFields()
         await this.getTagList()
       })
     }

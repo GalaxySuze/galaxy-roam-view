@@ -40,6 +40,13 @@
             label="分类名称">
           </el-table-column>
           <el-table-column
+            prop="created_at"
+            label="创建时间">
+            <template v-slot="{ row }">
+              {{ row.created_at | DateFormat }}
+            </template>
+          </el-table-column>
+          <el-table-column
             width="260"
             fixed="right"
             label="操作">
