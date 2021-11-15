@@ -33,7 +33,7 @@
       <el-header>
         <div>
           <el-button type="danger" size="small" icon="el-icon-s-fold" circle @click="toggleCollapse"></el-button>
-          <el-button type="primary" size="small" icon="el-icon-s-home" circle></el-button>
+          <el-button type="primary" size="small" icon="el-icon-s-home" @click="toHome" circle></el-button>
         </div>
         <div class="header-user">
           <el-avatar :size="32" :src="loginAvatar"></el-avatar>&nbsp;&nbsp;
@@ -77,6 +77,10 @@ export default {
       this.menuCollapse = !this.menuCollapse
     },
     checkNotify () {
+    },
+    toHome () {
+      const routerJump = this.$router.resolve('/index')
+      window.open(routerJump.href, '_blank')
     }
   }
 }

@@ -6,22 +6,22 @@
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>数据管理</el-breadcrumb-item>
-          <el-breadcrumb-item>团队列表</el-breadcrumb-item>
+          <el-breadcrumb-item>站点列表</el-breadcrumb-item>
         </el-breadcrumb>
       </el-col>
       <!-- 功能栏 -->
       <el-col :span="6" class="add-btn">
-        <el-button type="primary" size="small" icon="iconfont iconfont-tianjia-" @click="showAddDialog">&nbsp;添加机构
+        <el-button type="primary" size="small" icon="iconfont iconfont-tianjia-" @click="showAddDialog">&nbsp;添加站点
         </el-button>
       </el-col>
       <el-col :span="24">
         <el-card class="list-card">
           <el-row :gutter="20">
             <el-col :span="4">
-              <el-input placeholder="搜索机构名" v-model="queryInfo.name" clearable @clear="getTeamList"></el-input>
+              <el-input placeholder="搜索站点名" v-model="queryInfo.name" clearable @clear="getSiteList"></el-input>
             </el-col>
             <el-col :span="3">
-              <el-select v-model="queryInfo.category_id" clearable placeholder="请选择分类" @clear="getTeamList">
+              <el-select v-model="queryInfo.category_id" clearable placeholder="请选择分类" @clear="getSiteList">
                 <el-option
                   v-for="queryCateItem in categoryList"
                   :key="queryCateItem.id"
@@ -31,7 +31,7 @@
               </el-select>
             </el-col>
             <el-col :span="3">
-              <el-select v-model="queryInfo.tags_id" clearable placeholder="请选择标签" @clear="getTeamList">
+              <el-select v-model="queryInfo.tags_id" clearable placeholder="请选择标签" @clear="getSiteList">
                 <el-option
                   v-for="queryTagItem in tagList"
                   :key="queryTagItem.id"
@@ -41,7 +41,7 @@
               </el-select>
             </el-col>
             <el-col :span="2">
-              <el-button type="success" icon="el-icon-search" :loading="searchLoading" @click="getTeamList">搜索
+              <el-button type="success" icon="el-icon-search" :loading="searchLoading" @click="getSiteList">搜索
               </el-button>
             </el-col>
           </el-row>
@@ -50,27 +50,27 @@
       <!-- 数据表格 -->
       <el-col :span="24">
         <el-table
-          :data="teamList"
+          :data="siteList"
           stripe>
           <el-table-column
             type="index">
           </el-table-column>
           <el-table-column
             width="100px"
-            prop="homepage"
-            label="主页">
+            prop="url"
+            label="地址">
             <template v-slot="{ row }">
-              <el-link type="info" disabled href="#" v-if="!row.homepage">暂无地址</el-link>
-              <el-link type="primary" :href="row.homepage" v-if="row.homepage" target="_blank">点击访问</el-link>
+              <el-link type="info" disabled href="#" v-if="!row.url">暂无地址</el-link>
+              <el-link type="primary" :href="row.url" v-if="row.url" target="_blank">点击访问</el-link>
             </template>
           </el-table-column>
           <el-table-column
             width="80px"
-            prop="avatar"
-            label="头像">
+            prop="thumb"
+            label="缩略图">
             <template v-slot="{ row }">
-              <el-avatar :size="30" icon="el-icon-user-solid" v-if="!row.avatar"></el-avatar>
-              <el-avatar :size="30" :src="row.avatar" v-if="row.avatar"></el-avatar>
+              <el-thumb :size="30" icon="el-icon-user-solid" v-if="!row.thumb"></el-thumb>
+              <el-thumb :size="30" :src="row.thumb" v-if="row.thumb"></el-thumb>
             </template>
           </el-table-column>
           <el-table-column
@@ -93,10 +93,6 @@
                 {{ item.tag }}
               </el-tag>
             </template>
-          </el-table-column>
-          <el-table-column
-            prop="class_start_date"
-            label="最近开班">
           </el-table-column>
           <el-table-column
             width="260"
@@ -133,7 +129,7 @@
 
     <!-- 新增弹框 -->
     <el-dialog
-      title="添加团队信息"
+      title="添加站点信息"
       :fullscreen="dialogFullscreen"
       :close-on-click-modal="false"
       :visible.sync="addDialogVisible"
@@ -142,10 +138,10 @@
       <!-- 内容主题区域 -->
       <el-form ref="addFormRef" :model="addForm" :rules="addFormRules" label-width="100px"
                :label-position="labelPosition">
-        <el-form-item label="团队名称" prop="name">
+        <el-form-item label="站点名称" prop="name">
           <el-input v-model="addForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="团队分类" prop="category_id">
+        <el-form-item label="站点分类" prop="category_id">
           <el-select v-model="addForm.category_id" clearable placeholder="请选择">
             <el-option
               v-for="cateItem in categoryList"
@@ -155,7 +151,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="团队标签" prop="tags_id">
+        <el-form-item label="站点标签" prop="tags_id">
           <el-select v-model="addForm.tags_id" multiple clearable placeholder="请选择">
             <el-option
               v-for="tagItem in tagList"
@@ -165,14 +161,11 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="主页地址" prop="homepage">
-          <el-input v-model="addForm.homepage"></el-input>
+        <el-form-item label="站点地址" prop="url">
+          <el-input v-model="addForm.url"></el-input>
         </el-form-item>
-        <el-form-item label="头像外链" prop="avatar">
-          <el-input v-model="addForm.avatar"></el-input>
-        </el-form-item>
-        <el-form-item label="最近开班" prop="class_start_date">
-          <el-input v-model="addForm.class_start_date"></el-input>
+        <el-form-item label="缩略图" prop="thumb">
+          <el-input v-model="addForm.thumb"></el-input>
         </el-form-item>
         <el-form-item label="详情描述" prop="desc">
           <quill-editor v-model="addForm.desc"></quill-editor>
@@ -187,7 +180,7 @@
     </el-dialog>
     <!-- 修改弹框 -->
     <el-dialog
-      title="修改团队信息"
+      title="修改站点信息"
       :fullscreen="dialogFullscreen"
       :close-on-click-modal="false"
       :visible.sync="editDialogVisible"
@@ -196,10 +189,10 @@
       <!-- 内容主题区域 -->
       <el-form ref="editFormRef" :model="editForm" :rules="editFormRules" label-width="100px"
                :label-position="labelPosition">
-        <el-form-item label="团队名称" prop="name">
+        <el-form-item label="站点名称" prop="name">
           <el-input v-model="editForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="团队分类" prop="category_id">
+        <el-form-item label="站点分类" prop="category_id">
           <el-select v-model="editForm.category_id" clearable placeholder="请选择">
             <el-option
               v-for="editCateItem in categoryList"
@@ -209,7 +202,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="团队标签" prop="tags_id">
+        <el-form-item label="站点标签" prop="tags_id">
           <el-select v-model="editForm.tags_id" multiple clearable placeholder="请选择">
             <el-option
               v-for="editTagItem in tagList"
@@ -219,14 +212,11 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="主页地址" prop="homepage">
-          <el-input v-model="editForm.homepage"></el-input>
+        <el-form-item label="站点地址" prop="url">
+          <el-input v-model="editForm.url"></el-input>
         </el-form-item>
-        <el-form-item label="头像外链" prop="avatar">
-          <el-input v-model="editForm.avatar"></el-input>
-        </el-form-item>
-        <el-form-item label="最近开班" prop="class_start_date">
-          <el-input v-model="editForm.class_start_date"></el-input>
+        <el-form-item label="缩略图" prop="thumb">
+          <el-input v-model="editForm.thumb"></el-input>
         </el-form-item>
         <el-form-item label="详情描述" prop="desc">
           <quill-editor v-model="editForm.desc"></quill-editor>
@@ -255,7 +245,7 @@ export default {
         page: 1, // 当前页
         pageSize: 10 // 当前页数显示条数
       },
-      teamList: [],
+      siteList: [],
       total: 0,
       labelPosition: 'right',
       searchLoading: false,
@@ -268,9 +258,8 @@ export default {
         name: '',
         category_id: '',
         tags_id: [],
-        avatar: '',
-        homepage: '',
-        class_start_date: '',
+        thumb: '',
+        url: '',
         desc: ''
       },
       editForm: {
@@ -278,16 +267,15 @@ export default {
         name: '',
         category_id: '',
         tags_id: [],
-        avatar: '',
-        homepage: '',
-        class_start_date: '',
+        thumb: '',
+        url: '',
         desc: ''
       },
       addFormRules: {
         name: [
           {
             required: true,
-            message: '请输入团队名',
+            message: '请输入站点名',
             trigger: 'blur'
           }
         ],
@@ -295,6 +283,13 @@ export default {
           {
             required: true,
             message: '请选择分类',
+            trigger: 'blur'
+          }
+        ],
+        url: [
+          {
+            required: true,
+            message: '请输入站点地址',
             trigger: 'blur'
           }
         ]
@@ -303,7 +298,7 @@ export default {
         name: [
           {
             required: true,
-            message: '请输入团队名称',
+            message: '请输入站点名称',
             trigger: 'blur'
           }
         ],
@@ -311,6 +306,13 @@ export default {
           {
             required: true,
             message: '请选择分类',
+            trigger: 'blur'
+          }
+        ],
+        url: [
+          {
+            required: true,
+            message: '请输入站点地址',
             trigger: 'blur'
           }
         ]
@@ -320,22 +322,22 @@ export default {
     }
   },
   created () {
-    this.getTeamList()
+    this.getSiteList()
     this.getFormInitData()
   },
   methods: {
     // 获取列表数据
-    async getTeamList () {
+    async getSiteList () {
       this.searchLoading = true
-      const { data: res } = await this.$http.get('admin/team/list', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('admin/site/list', { params: this.queryInfo })
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
-      this.teamList = res.data.list
+      this.siteList = res.data.list
       this.total = res.data.total
       this.searchLoading = false
     },
     async showEditDialog (row) {
       row.show_loading = true
-      const { data: res } = await this.$http.get(`admin/team/${row.id}`)
+      const { data: res } = await this.$http.get(`admin/site/${row.id}`)
       if (res.meta.status !== 200) {
         row.show_loading = false
         return this.$message.error(res.meta.msg)
@@ -348,12 +350,11 @@ export default {
       this.editForm.tags_id = tagsArr
       this.editDialogVisible = true
       row.show_loading = false
-      console.log(this.editForm)
     },
     async getFormInitData () {
       this.categoryList = []
       this.tagList = []
-      const { data: res } = await this.$http.get('admin/team/form-init-data')
+      const { data: res } = await this.$http.get('admin/site/form-init-data')
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
       this.categoryList = res.data.category
       this.tagList = res.data.tag
@@ -367,23 +368,23 @@ export default {
       }).catch(err => err)
 
       if (confirmRes === 'confirm') {
-        const { data: res } = await this.$http.delete(`admin/team/${id}`)
+        const { data: res } = await this.$http.delete(`admin/site/${id}`)
         if (res.meta.status !== 200) {
           return this.$message.error(res.meta.msg)
         }
         this.$message.success('删除成功')
-        await this.getTeamList()
+        await this.getSiteList()
       }
     },
     // 分页数量变更处理
     handleSizeChange (newSize) {
       this.queryInfo.pageSize = newSize
-      this.getTeamList()
+      this.getSiteList()
     },
     // 分页当前页跳转处理
     handleCurrentChange (newPage) {
       this.queryInfo.page = newPage
-      this.getTeamList()
+      this.getSiteList()
     },
     // 获取表单初始显示数据
     showAddDialog () {
@@ -403,15 +404,15 @@ export default {
         }
         const newForm = _.cloneDeep(this.addForm)
         newForm.tags_id = this.addForm.tags_id.join(',')
-        const { data: res } = await this.$http.post('admin/team', newForm)
+        const { data: res } = await this.$http.post('admin/site', newForm)
         this.addLoading = false
         if (res.meta.status !== 201) {
           return this.$message.error(res.meta.msg)
         }
-        this.$message.success('添加团队成功')
+        this.$message.success('添加站点成功')
         this.$refs.addFormRef.resetFields()
         this.addDialogVisible = false
-        await this.getTeamList()
+        await this.getSiteList()
       })
     },
     editDialogClose () {
@@ -426,15 +427,15 @@ export default {
           this.addLoading = false
           return
         }
-        const { data: res } = await this.$http.put(`admin/team/${this.editForm.id}`, this.editForm)
+        const { data: res } = await this.$http.put(`admin/site/${this.editForm.id}`, this.editForm)
         this.addLoading = false
         if (res.meta.status !== 200) {
           return this.$message.error(res.meta.msg)
         }
-        this.$message.success('更新团队成功')
+        this.$message.success('更新站点成功')
         this.$refs.editFormRef.resetFields()
         this.editDialogVisible = false
-        await this.getTeamList()
+        await this.getSiteList()
       })
     }
   }

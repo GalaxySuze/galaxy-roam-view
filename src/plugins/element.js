@@ -37,6 +37,12 @@ import {
   Dialog,
   Select,
   Option,
+  Badge,
+  Popover,
+  Backtop,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
   MessageBox
 } from 'element-ui'
 
@@ -79,3 +85,9 @@ Vue.use(Tooltip)
 Vue.use(Dialog)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Badge)
+Vue.use(Popover)
+Vue.use(Backtop)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)

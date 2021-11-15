@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Web from '../components/Web'
-import Index from '../components/web/Index'
+import DrawClass from '../components/web/DrawClass'
 import Admin from '../components/Admin'
 import Login from '../components/admin/Login'
 import Welcome from '../components/admin/Welcome'
@@ -9,13 +9,17 @@ import User from '../components/admin/user/User'
 import Category from '../components/admin/category/Category'
 import Tag from '../components/admin/tag/Tag'
 import Team from '../components/admin/team/Team'
+import SeeMore from '../components/web/SeeMore'
+import TagTeams from '../components/web/TagTeams'
+import Index from '../components/web/Index'
+import Site from '../components/admin/site/Site'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: Index
+    redirect: DrawClass
   },
   {
     path: '/admin/login',
@@ -24,11 +28,23 @@ const routes = [
   {
     path: '/home',
     component: Web,
-    redirect: '/index',
+    redirect: '/draw-class',
     children: [
       {
         path: '/index',
         component: Index
+      },
+      {
+        path: '/draw-class',
+        component: DrawClass
+      },
+      {
+        path: '/more',
+        component: SeeMore
+      },
+      {
+        path: '/tag-teams',
+        component: TagTeams
       }
     ]
   },
@@ -56,6 +72,10 @@ const routes = [
       {
         path: '/team',
         component: Team
+      },
+      {
+        path: '/site',
+        component: Site
       }
     ]
   }
@@ -67,7 +87,8 @@ const router = new VueRouter({
 
 // 路由导航守卫
 router.beforeEach((to, from, next) => {
-  if (to.path === '/admin/login' || to.path === '/home' || to.path === '/index') {
+  const directAccess = ['/admin/login', '/home', '/index', '/draw-class', '/more', '/tag-teams']
+  if (directAccess.indexOf(to.path) !== -1) {
     return next()
   }
   const tokenStr = window.sessionStorage.getItem('token')

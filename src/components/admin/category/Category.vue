@@ -40,6 +40,13 @@
             label="分类名称">
           </el-table-column>
           <el-table-column
+            prop="type"
+            label="分类类型">
+            <template v-slot="{ row }">
+              {{ row.type === 1 ? '团队分类' : '站点分类' }}
+            </template>
+          </el-table-column>
+          <el-table-column
             prop="created_at"
             label="创建时间">
             <template v-slot="{ row }">
@@ -86,6 +93,16 @@
                :label-position="labelPosition">
         <el-form-item label="分类名称" prop="title">
           <el-input v-model="addForm.title"></el-input>
+        </el-form-item>
+        <el-form-item label="分类类型" prop="type">
+          <el-select v-model="addForm.type" clearable placeholder="请选择">
+            <el-option
+              v-for="addTagItem in typeList"
+              :key="addTagItem.value"
+              :label="addTagItem.type"
+              :value="addTagItem.value">
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <!-- 底部区域 -->
@@ -137,7 +154,17 @@ export default {
             trigger: 'blur'
           }
         ]
-      }
+      },
+      typeList: [
+        {
+          value: 1,
+          type: '团队分类'
+        },
+        {
+          value: 2,
+          type: '站点分类'
+        }
+      ]
     }
   },
   created () {
