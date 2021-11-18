@@ -39,7 +39,8 @@
               <!-- 标签 -->
               <el-col :span="24">
                 <el-row class="team-tags">
-                  <el-tag size="mini" type="info" v-for="teamTag in team.tags_name" :key="teamTag.id">
+                  <el-tag size="mini" type="info" v-for="teamTag in team.tags_name" :key="teamTag.id"
+                          @click="toTagTeams(teamTag.id, teamTag.tag)">
                     #{{ teamTag.tag }}
                   </el-tag>
                 </el-row>
@@ -68,9 +69,19 @@ export default {
     async getCategoryTeams () {
       const { data: res } = await this.$http.get(`home/tag-teams/${this.queryTagId}`)
       if (res.meta.status !== 200) {
-        return this.$message.error('获取标签列表数据失败, 请联系管理员')
+        return this.$message.error('获取标签列表数据失败, 请在右下角联系管理员')
       }
       this.teamList = res.data.teams
+    },
+    toTagTeams (tagId, tagName) {
+      const routerJump = this.$router.resolve({
+        path: '/tag-teams',
+        query: {
+          tag_id: tagId,
+          tag: tagName
+        }
+      })
+      window.open(routerJump.href, '_blank')
     }
   }
 }
@@ -109,6 +120,7 @@ export default {
     .team-tags {
       > .el-tag {
         margin-left: 5px;
+        cursor: pointer;
       }
     }
   }

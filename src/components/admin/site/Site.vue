@@ -11,8 +11,7 @@
       </el-col>
       <!-- 功能栏 -->
       <el-col :span="6" class="add-btn">
-        <el-button type="primary" size="small" icon="iconfont iconfont-tianjia-" @click="showAddDialog">&nbsp;添加站点
-        </el-button>
+        <el-button type="primary" size="medium" icon="el-icon-plus" @click="showAddDialog">添加站点</el-button>
       </el-col>
       <el-col :span="24">
         <el-card class="list-card">
@@ -31,7 +30,7 @@
               </el-select>
             </el-col>
             <el-col :span="3">
-              <el-select v-model="queryInfo.tags_id" clearable placeholder="请选择标签" @clear="getSiteList">
+              <el-select v-model="queryInfo.tags_id" clearable filterable placeholder="请选择标签" @clear="getSiteList">
                 <el-option
                   v-for="queryTagItem in tagList"
                   :key="queryTagItem.id"
@@ -119,7 +118,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page.sync="queryInfo.page"
-          :page-sizes="[1, 5, 10, 20]"
+          :page-sizes="[5, 10, 20]"
           :page-size="queryInfo.pageSize"
           layout="total, sizes, prev, pager, next"
           :total="total">
@@ -138,6 +137,16 @@
       <!-- 内容主题区域 -->
       <el-form ref="addFormRef" :model="addForm" :rules="addFormRules" label-width="100px"
                :label-position="labelPosition">
+        <el-form-item label="批量导入">
+          <el-upload
+            :action="importURL"
+            :limit="1"
+            :on-success="handleSuccess"
+            :headers="headerObj">
+            <el-button type="primary" size="medium" icon="el-icon-upload2">上传Excel</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传xls/xlsx文件，且不超过500kb</div>
+          </el-upload>
+        </el-form-item>
         <el-form-item label="站点名称" prop="name">
           <el-input v-model="addForm.name"></el-input>
         </el-form-item>
@@ -318,7 +327,11 @@ export default {
         ]
       },
       categoryList: [],
-      tagList: []
+      tagList: [],
+      importURL: 'http://galaxyroam.test:8080/api/admin/site/import',
+      headerObj: {
+        Authorization: window.sessionStorage.getItem('token')
+      }
     }
   },
   created () {
@@ -330,7 +343,10 @@ export default {
     async getSiteList () {
       this.searchLoading = true
       const { data: res } = await this.$http.get('admin/site/list', { params: this.queryInfo })
-      if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+      if (res.meta.status !== 200) {
+        this.searchLoading = false
+        return this.$message.error(res.meta.msg)
+      }
       this.siteList = res.data.list
       this.total = res.data.total
       this.searchLoading = false
@@ -437,6 +453,10 @@ export default {
         this.editDialogVisible = false
         await this.getSiteList()
       })
+    },
+    // 上传成功回调
+    handleSuccess (response) {
+      this.$message.success(`导入完毕: 导入总条数[${response.data.total}], 成功[${response.data.success}]条, 失败[${response.data.fail}]条`)
     }
   }
 }

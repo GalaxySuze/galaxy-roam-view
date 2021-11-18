@@ -13,6 +13,7 @@ import SeeMore from '../components/web/SeeMore'
 import TagTeams from '../components/web/TagTeams'
 import Index from '../components/web/Index'
 import Site from '../components/admin/site/Site'
+import SiteNav from '../components/web/SiteNav'
 
 Vue.use(VueRouter)
 
@@ -45,6 +46,10 @@ const routes = [
       {
         path: '/tag-teams',
         component: TagTeams
+      },
+      {
+        path: '/site-nav',
+        component: SiteNav
       }
     ]
   },

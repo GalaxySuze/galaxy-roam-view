@@ -39,10 +39,11 @@ import {
   Option,
   Badge,
   Popover,
-  Backtop,
   Dropdown,
   DropdownMenu,
   DropdownItem,
+  Upload,
+  Alert,
   MessageBox
 } from 'element-ui'
 
@@ -87,7 +88,8 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(Badge)
 Vue.use(Popover)
-Vue.use(Backtop)
 Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
+Vue.use(Upload)
+Vue.use(Alert)

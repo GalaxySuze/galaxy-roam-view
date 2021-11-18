@@ -10,7 +10,7 @@
                    text-color="#fff"
                    active-text-color="#fff" router>
             <el-menu-item index="/index">首页</el-menu-item>
-            <el-menu-item index="3">站点推荐</el-menu-item>
+            <el-menu-item index="/site-nav">站点推荐</el-menu-item>
             <el-submenu index="2" class="header-submenu-title">
               <template slot="title">绘画相关</template>
               <el-menu-item index="2-1">书籍推荐</el-menu-item>
@@ -75,13 +75,19 @@
           </el-row>
         </div>
       </div>
+      <!-- 返回顶部 -->
+      <PackedMenu></PackedMenu>
     </el-main>
-    <el-backtop target=".main-box"></el-backtop>
   </el-container>
 </template>
 
 <script>
+import PackedMenu from './common/PackedMenu'
+
 export default {
+  components: {
+    PackedMenu
+  },
   data () {
     return {
       minHeight: 0
@@ -195,4 +201,5 @@ export default {
     }
   }
 }
+
 </style>

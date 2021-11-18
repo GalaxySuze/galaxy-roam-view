@@ -11,7 +11,7 @@
       </el-col>
       <!-- 功能栏 -->
       <el-col :span="6" class="add-btn">
-        <el-button type="primary" size="small" icon="iconfont iconfont-tianjia-" @click="showAddDialog">&nbsp;添加机构
+        <el-button type="primary" size="medium" icon="el-icon-plus" @click="showAddDialog">&nbsp;添加机构
         </el-button>
       </el-col>
       <el-col :span="24">
@@ -31,7 +31,7 @@
               </el-select>
             </el-col>
             <el-col :span="3">
-              <el-select v-model="queryInfo.tags_id" clearable placeholder="请选择标签" @clear="getTeamList">
+              <el-select v-model="queryInfo.tags_id" clearable filterable placeholder="请选择标签" @clear="getTeamList">
                 <el-option
                   v-for="queryTagItem in tagList"
                   :key="queryTagItem.id"
@@ -123,7 +123,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page.sync="queryInfo.page"
-          :page-sizes="[1, 5, 10, 20]"
+          :page-sizes="[5, 10, 20]"
           :page-size="queryInfo.pageSize"
           layout="total, sizes, prev, pager, next"
           :total="total">
@@ -328,7 +328,10 @@ export default {
     async getTeamList () {
       this.searchLoading = true
       const { data: res } = await this.$http.get('admin/team/list', { params: this.queryInfo })
-      if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+      if (res.meta.status !== 200) {
+        this.searchLoading = false
+        return this.$message.error(res.meta.msg)
+      }
       this.teamList = res.data.list
       this.total = res.data.total
       this.searchLoading = false

@@ -49,7 +49,8 @@
               <!-- 标签 -->
               <el-col :span="24">
                 <el-row class="team-tags">
-                  <el-tag size="mini" type="info" v-for="teamTag in team.tags_name" :key="teamTag.id">
+                  <el-tag size="mini" type="info" v-for="teamTag in team.tags_name" :key="teamTag.id"
+                          @click="toTagTeams(teamTag.id, teamTag.tag)">
                     #{{ teamTag.tag }}
                   </el-tag>
                 </el-row>
@@ -82,9 +83,9 @@ export default {
   },
   methods: {
     async getIndexData () {
-      const { data: res } = await this.$http.get('home/index', { params: this.queryInfo })
+      const { data: res } = await this.$http.get('home/draw-class', { params: this.queryInfo })
       if (res.meta.status !== 200) {
-        return this.$message.error('获取首页列表数据失败, 请联系管理员')
+        return this.$message.error('获取页面数据失败, 请在右下角联系管理员')
       }
       this.hotTagList = res.data.hot_tags
       this.teamList = res.data.teams
@@ -152,6 +153,7 @@ export default {
     .team-tags {
       > .el-tag {
         margin-left: 5px;
+        cursor: pointer;
       }
     }
   }
@@ -166,5 +168,10 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .el-link {
+    font-size: 18px;
+    font-weight: 700;
+  }
 }
 </style>

@@ -11,7 +11,7 @@
       </el-col>
       <!-- 功能栏 -->
       <el-col :span="6" class="add-btn">
-        <el-button type="primary" size="small" icon="iconfont iconfont-tianjia-" @click="showAddDialog">&nbsp;添加标签
+        <el-button type="primary" size="medium" icon="el-icon-plus" @click="showAddDialog">&nbsp;添加标签
         </el-button>
       </el-col>
       <el-col :span="24">
@@ -66,7 +66,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page.sync="queryInfo.page"
-          :page-sizes="[1, 5, 10, 20]"
+          :page-sizes="[5, 10, 20]"
           :page-size="queryInfo.pageSize"
           layout="total, sizes, prev, pager, next"
           :total="total">
