@@ -37,7 +37,7 @@
               <ul class="info-ul">
                 <li class="info-title">关于「银河漫游」</li>
                 <li class="info-li">
-                  LearnKu 是终身编程者的修道场
+                  Hello World
                 </li>
                 <li class="info-li">
                   摒弃世俗浮躁，追求技术精湛
@@ -49,17 +49,17 @@
                 <li class="info-title">资源推荐</li>
                 <li class="info-li">《社区使用指南》</li>
                 <li class="info-li">《文档撰写指南》</li>
-                <li class="info-li">《LearnKu 社区规范》</li>
+                <li class="info-li">《XXXX规范》</li>
                 <li class="info-li">《提问的智慧》</li>
               </ul>
             </el-col>
             <el-col :span="6" class="footer-info-col">
               <ul class="info-ul">
                 <li class="info-title">其他信息</li>
-                <li class="info-li">软件外包</li>
+                <li class="info-li">XXXX</li>
                 <li class="info-li">成为版主</li>
-                <li class="info-li">所有测验</li>
-                <li class="info-li">联系站长（反馈建议）</li>
+                <li class="info-li">XXXX</li>
+                <li class="info-li">联系站长</li>
               </ul>
             </el-col>
             <el-col :span="6" style="height: 160px;display: flex;justify-content: center;align-items: center;">
@@ -67,9 +67,9 @@
             </el-col>
           </el-row>
           <el-row :gutter="12" class="footer-record">
-            <span>粤ICP备18099781号-6</span>
+            <span>浙ICP备88888888号-1</span>
             <el-divider direction="vertical"></el-divider>
-            <span> 粤公网安备 44030502004330号</span>
+            <span> 浙公网安备 8888888888888号</span>
             <el-divider direction="vertical"></el-divider>
             <span>由 Vick 设计和编码 ❤</span>
           </el-row>
